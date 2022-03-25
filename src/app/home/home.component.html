@@ -1,0 +1,26 @@
+<div class="grid-container">
+  <span class="header">
+    <span>Angular Exersice</span>
+  </span>
+  <div class="container">
+    <mat-tab-group mat-align-tabs="center" (selectedTabChange)="onTabSelection($event)">
+      <mat-tab label="a new component">
+        <div *ngFor="let line of infoMessages" [innerHTML]="line"></div>
+
+      </mat-tab>
+      <mat-tab label="redux flow">
+        <div *ngFor="let line of infoMessages" [innerHTML]="line"></div>
+      </mat-tab>
+      <mat-tab label="dynamic component">
+        <div *ngFor="let line of infoMessages" [innerHTML]="line"></div>
+        <button mat-raised-button color="primary" (click)="createComponent()">Create component</button>
+      </mat-tab>i
+      <!-- <mat-tab label="File list api">
+        <div *ngFor="let line of infoMessages" [innerHTML]="line"></div>
+      </mat-tab> -->
+    </mat-tab-group>
+  </div>
+  <input [(ngModel)] = "dataTo.value" type="number" name="valTo" id="valTo" style="height: 10px;">
+  <button type="button" (click) = onSendBtnClick()>Press To Recieve</button>
+  <app-shay *ngIf="this.dataFrom != null" [inputData] = "dataFrom" ></app-shay>
+</div>
