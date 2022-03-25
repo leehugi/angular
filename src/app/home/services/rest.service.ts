@@ -9,7 +9,7 @@ export class RestService {
 
   constructor(private http: HttpClient) {}
 
-  getDataFromApi(data: DataToServer): Observable<DataFromServer> {
-    return this.http.post<DataFromServer>(`${this.url}`,data);
+  sendValueToServer(value: DataToServer): Observable<DataFromServer> {
+    return this.http.post<DataFromServer>(this.url, value);
   }
 }

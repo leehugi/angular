@@ -12,10 +12,10 @@ import { environment } from "src/environments/environment";
 import { AppEffects } from "./effects/app.effects";
 import { RestService } from "./services/rest.service";
 import { HttpClientModule } from "@angular/common/http";
-import { ShayComponent } from './shay/shay.component';
+import { SendMessageComponent } from './send-message/send-message.component';
 
 @NgModule({
-  declarations: [HomeComponent, ShayComponent],
+  declarations: [HomeComponent, SendMessageComponent],
   imports: [
     CommonModule,
     HttpClientModule,

@@ -1,0 +1,7 @@
+<input [(ngModel)] = "dataToServer.value" type="number" style="height: 10px;">
+<button type="button" (click)=onSendMsgToServer()>Press To Send</button>
+
+<div *ngIf="valueReceive">
+    <h3>Server Answer:</h3>
+    <p>Value: {{valueReceive.value}}</p>
+</div>

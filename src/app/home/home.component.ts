@@ -29,8 +29,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
 
-  onSendBtnClick(): void {
-    this.rest.getDataFromApi(this.dataTo).subscribe(
+  onSendBtnClick(event: DataToServer): void {
+    this.rest.sendValueToServer(event).subscribe(
       res => {
         console.log(res);
         this.dataFrom = res;
