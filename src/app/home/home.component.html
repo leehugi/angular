@@ -14,7 +14,8 @@
       <mat-tab label="dynamic component">
         <div *ngFor="let line of infoMessages" [innerHTML]="line"></div>
         <button mat-raised-button color="primary" (click)="createComponent()">Create component</button>
-      </mat-tab>i
+        <div #sendMessage (dataToServerEvent)="onSendBtnClick($event)"></div>
+      </mat-tab>
       <!-- <mat-tab label="File list api">
         <div *ngFor="let line of infoMessages" [innerHTML]="line"></div>
       </mat-tab> -->

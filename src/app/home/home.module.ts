@@ -38,6 +38,6 @@ import { SendMessageComponent } from './send-message/send-message.component';
     }),
   ],
   providers: [RestService],
-  entryComponents: [],
+  entryComponents: [SendMessageComponent],
 })
 export class HomeModule {}

@@ -13,12 +13,10 @@ export class SendMessageComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onSendMsgToServer(){
     this.dataToServerEvent.emit(this.dataToServer);
-    // this.isReceive = true;
   }
 
 }

@@ -2,6 +2,13 @@ import {
   Component,
   OnInit,
   OnDestroy,
+  ComponentFactoryResolver,
+  ComponentFactory,
+  ComponentRef,
+  ViewChild,
+  ViewContainerRef,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
 } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { State } from "./reducers";
@@ -9,6 +16,8 @@ import { INSTRUCTIONS_MSGS, InfoMessages } from "./models/info-messages";
 import { MatTabChangeEvent } from "@angular/material";
 import { RestService } from './services/rest.service';
 import { DataToServer, DataFromServer } from './models/app-data';
+import { SendMessageComponent } from "./send-message/send-message.component";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-home",
@@ -17,10 +26,12 @@ import { DataToServer, DataFromServer } from './models/app-data';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   infoMessages: InfoMessages = INSTRUCTIONS_MSGS[0];
-  dataTo: DataToServer = {value: 0};
   dataFrom: DataFromServer;
 
-  constructor(private store: Store<State>, private rest: RestService) {}
+  @ViewChild("sendMessage", { read: ViewContainerRef, static: true }) container;
+  componentRef: ComponentRef<any>;
+
+  constructor(private store: Store<State>, private rest: RestService, private resolve: ComponentFactoryResolver) {}
 
   public ngOnInit(): void {}
 
@@ -29,9 +40,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
 
-  onSendBtnClick(event: DataToServer): void {
-    this.rest.sendValueToServer(event).subscribe(
-      res => {
+  onSendBtnClick(event: DataToServer): Promise<void | DataFromServer> {
+    return this.rest.sendValueToServer(event).then(res => {
         console.log(res);
         this.dataFrom = res;
       }
@@ -40,7 +50,21 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onSendBtnClickRedux(): void {}
 
-  createComponent() {}
+  createComponent() {
+    this.container.clear();
+    const factory: ComponentFactory<SendMessageComponent> = this.resolve.resolveComponentFactory(SendMessageComponent);
+    this.componentRef = this.container.createComponent(factory, this.container.parentInjector);
+    this.componentRef.instance.dataToServerEvent.subscribe(async event => {
+      // using Promise to wait for the http response
+      await new Promise(resolve => {    
+        resolve(this.onSendBtnClick(event));
+      });
+      this.componentRef.instance.valueReceive = this.dataFrom;
+    });
+  }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.container.clear();
+    this.componentRef.destroy();
+  }
 }
