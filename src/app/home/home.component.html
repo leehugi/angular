@@ -10,6 +10,7 @@
       </mat-tab>
       <mat-tab label="redux flow">
         <div *ngFor="let line of infoMessages" [innerHTML]="line"></div>
+        <app-send-message (dataToServerEvent)="onSendBtnClickRedux($event)" [valueReceive]="dataFrom"></app-send-message>
       </mat-tab>
       <mat-tab label="dynamic component">
         <div *ngFor="let line of infoMessages" [innerHTML]="line"></div>

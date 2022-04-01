@@ -10,14 +10,15 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from "@angular/core";
-import { Store } from "@ngrx/store";
-import { State } from "./reducers";
+import { select, Store } from "@ngrx/store";
+import { getDisplayData, State } from "./reducers";
 import { INSTRUCTIONS_MSGS, InfoMessages } from "./models/info-messages";
 import { MatTabChangeEvent } from "@angular/material";
 import { RestService } from './services/rest.service';
 import { DataToServer, DataFromServer } from './models/app-data';
 import { SendMessageComponent } from "./send-message/send-message.component";
 import { Subscription } from "rxjs";
+import { PostData } from "./actions/app.actions";
 
 @Component({
   selector: "app-home",
@@ -37,18 +38,22 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onTabSelection(event: MatTabChangeEvent) {
     this.infoMessages = INSTRUCTIONS_MSGS[event.index];
+    this.dataFrom =  null;
   }
 
 
   onSendBtnClick(event: DataToServer): Promise<void | DataFromServer> {
     return this.rest.sendValueToServer(event).then(res => {
-        console.log(res);
         this.dataFrom = res;
       }
     );
   }
 
-  onSendBtnClickRedux(): void {}
+  onSendBtnClickRedux(event: DataToServer): void {
+    event = Object.assign({}, event);   // clone the event
+    this.store.dispatch(new PostData(event));
+    this.store.pipe(select(getDisplayData)).subscribe(res => this.dataFrom = res);
+  }
 
   createComponent() {
     this.container.clear();
