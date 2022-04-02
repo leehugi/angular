@@ -6,11 +6,11 @@
     <mat-tab-group mat-align-tabs="center" (selectedTabChange)="onTabSelection($event)">
       <mat-tab label="a new component">
         <div *ngFor="let line of infoMessages" [innerHTML]="line"></div>
-        <app-send-message (dataToServerEvent)="onSendBtnClick($event)" [valueReceive]="dataFrom"></app-send-message>
+        <app-send-message (dataToServerEvent)="onSendBtnClick($event)" [valueReceive]="dataFromServer"></app-send-message>
       </mat-tab>
       <mat-tab label="redux flow">
         <div *ngFor="let line of infoMessages" [innerHTML]="line"></div>
-        <app-send-message (dataToServerEvent)="onSendBtnClickRedux($event)" [valueReceive]="dataFrom"></app-send-message>
+        <app-send-message (dataToServerEvent)="onSendBtnClickRedux($event)" [valueReceive]="dataFromServer"></app-send-message>
       </mat-tab>
       <mat-tab label="dynamic component">
         <div *ngFor="let line of infoMessages" [innerHTML]="line"></div>

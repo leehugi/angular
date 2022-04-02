@@ -2,11 +2,10 @@ import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { Injectable } from "@angular/core";
 import { State } from "../reducers";
-import { catchError, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 import { RestService } from '../services/rest.service'
 import { AppActionTypes, PostData, PostDataFailure, PostDataSuccess } from "../actions/app.actions";
-import { of } from "rxjs";
 
 @Injectable()
 export class AppEffects {
