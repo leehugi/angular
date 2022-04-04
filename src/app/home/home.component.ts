@@ -38,6 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   onTabSelection(event: MatTabChangeEvent) {
     this.infoMessages = INSTRUCTIONS_MSGS[event.index];
     this.dataFromServer =  null;
+    this.container.clear();
   }
 
 
